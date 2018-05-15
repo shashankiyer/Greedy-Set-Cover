@@ -1,5 +1,5 @@
 '''
-******************************************
+Computes an approximate minimal set cover using a polynomial-time-r(n)-approximation algorithm
 
 :author Shashank
 '''
@@ -12,6 +12,12 @@ NO_OF_NODES = 0
 
 def determine_min_cost(U, F):
     '''
+    Finds the set that maximises S ∪ U for S ∈ F
+
+    :param U : The elements that are still left to be covered
+    :param F : The list of subsets
+
+    :return Si : The subset that will minimise U the most
     '''
     cost = 0
     Si = set()
@@ -25,6 +31,12 @@ def determine_min_cost(U, F):
 
 def greedy_set_cover(X, F):
     '''
+    Computes a minimal set cover
+
+    :param X: The target set
+    :param F: The list of subsets
+
+    :return C: The minimal set cover
     '''
     U = set(X)
     C=[]
@@ -40,6 +52,13 @@ def greedy_set_cover(X, F):
 
 def brute_force_set_cover(X, F):
     '''
+    Computes the minimal set cover by iterating over all permutations of
+    the set cover
+
+    :param X: The target set
+    :param F: The list of subsets
+
+    :return C: The minimal set cover
     '''
     C_min = F
     for ff in list(permutations(F)):
@@ -86,7 +105,7 @@ def parse_adjacency_matrix_file(filename):
     A function for parsing the adjacency matrix from text data in .txt file.
 
     :param filename: The path of the matrix file
-    :return: The parsed vectors x and y
+    :return: The parsed vectors X and F
     '''
 
     if not os.path.exists(filename):
@@ -129,13 +148,12 @@ if __name__ == '__main__':
 
     X, F = parse_adjacency_matrix_file(args.some_file_with_list_of_sets)
 
-    print(greedy_set_cover(X, F))
-    #p = create_adjacency_matrix(greedy_set_cover(X, F))
-    #for i in p:
-    #    print(*i,sep='')
+    p = create_adjacency_matrix(greedy_set_cover(X, F))
+    for i in p:
+        print(*i,sep='')
 
     print()
-    print(brute_force_set_cover(X, F))
-    #p = create_adjacency_matrix(brute_force_set_cover(X, F))
-    #for i in p:
-    #    print(*i,sep='')
+
+    p = create_adjacency_matrix(brute_force_set_cover(X, F))
+    for i in p:
+        print(*i,sep='')
